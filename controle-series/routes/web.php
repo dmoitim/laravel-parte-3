@@ -49,3 +49,21 @@ Route::get('/visualizando-email', function() {
         10
     );
 });
+Route::get('/enviando-email', function() {
+    $email = new \App\Mail\NovaSerie(
+        'Arrow',
+        1,
+        10
+    );
+
+    $email->subject = "Nova Série Adicionada";
+
+    $usuario = (object)[
+        'name' => 'Devair',
+        'email' => 'dmoitim@gmail.com'
+    ];
+
+    Mail::to($usuario)->send($email);
+
+    return 'Email enviado!';
+});
