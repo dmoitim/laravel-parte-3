@@ -8,6 +8,7 @@ use App\Services\CriadorDeSerie;
 use App\Services\RemovedorDeSerie;
 use Symfony\Component\HttpFoundation\Request;
 use \Illuminate\Support\Facades\Mail;
+use App\Models\User;
 
 class SeriesController extends Controller
 {
@@ -34,17 +35,19 @@ class SeriesController extends Controller
             $request->ep_por_temporada
         );
 
-        $email = new \App\Mail\NovaSerie(
-            $request->nome,
-            $request->qtd_temporadas,
-            $request->ep_por_temporada
-        );
+        $todosUsuarios = User::all();
 
-        $email->subject = "Nova Série Adicionada";
+        foreach ($todosUsuarios as $key => $usuario) {
+            $email = new \App\Mail\NovaSerie(
+                $request->nome,
+                $request->qtd_temporadas,
+                $request->ep_por_temporada
+            );
+    
+            $email->subject = "Nova Série Adicionada";
 
-        $usuario = $request->user();
-
-        Mail::to($usuario)->send($email);
+            Mail::to($usuario)->send($email);
+        }
 
         $request->session()
             ->flash(
