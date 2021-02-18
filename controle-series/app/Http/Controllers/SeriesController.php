@@ -37,7 +37,9 @@ class SeriesController extends Controller
 
         $todosUsuarios = User::all();
 
-        foreach ($todosUsuarios as $key => $usuario) {
+        foreach ($todosUsuarios as $indice => $usuario) {
+            $multiplicador = $indice + 1;
+
             $email = new \App\Mail\NovaSerie(
                 $request->nome,
                 $request->qtd_temporadas,
@@ -46,7 +48,9 @@ class SeriesController extends Controller
     
             $email->subject = "Nova Série Adicionada";
 
-            Mail::to($usuario)->queue($email);
+            $delay = now()->addSecond($multiplicador * 10);
+
+            Mail::to($usuario)->later($delay, $email);
         }
 
         $request->session()
