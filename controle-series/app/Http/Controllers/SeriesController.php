@@ -46,10 +46,7 @@ class SeriesController extends Controller
     
             $email->subject = "Nova Série Adicionada";
 
-            Mail::to($usuario)->send($email);
-
-            // Adiciona tempo entre o envio dos e-mails
-            sleep(3);
+            Mail::to($usuario)->queue($email);
         }
 
         $request->session()
