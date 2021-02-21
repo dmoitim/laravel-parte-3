@@ -1,6 +1,7 @@
 <?php
 namespace App\Services;
 
+use App\Events\SerieApagada;
 use App\Models\Episodio;
 use App\Models\Temporada;
 use App\Serie;
@@ -19,9 +20,8 @@ class RemovedorDeSerie
             $this->removerTemporadas($serie);
             $serie->delete();
 
-            if ($serie->capa) {
-                Storage::delete($serie->capa);
-            }
+            $eventoExcluirSerie = new SerieApagada($serie);
+            event($eventoExcluirSerie);
         });
 
         return $nomeSerie;
