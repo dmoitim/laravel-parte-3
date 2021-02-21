@@ -5,6 +5,7 @@ use App\Models\Episodio;
 use App\Models\Temporada;
 use App\Serie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class RemovedorDeSerie
 {
@@ -17,6 +18,10 @@ class RemovedorDeSerie
 
             $this->removerTemporadas($serie);
             $serie->delete();
+
+            if ($serie->capa) {
+                Storage::delete($serie->capa);
+            }
         });
 
         return $nomeSerie;
