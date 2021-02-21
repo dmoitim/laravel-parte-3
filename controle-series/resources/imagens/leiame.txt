@@ -1,0 +1,1 @@
+Depois de executar o comando para criar o link simbólico do storage, copiar o arquivo "sem-imagem.jpg" para a pasta storage/serie.
