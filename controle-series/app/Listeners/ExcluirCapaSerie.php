@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class ExcluirCapaSerie
+class ExcluirCapaSerie implements ShouldQueue
 {
     /**
      * Create the event listener.

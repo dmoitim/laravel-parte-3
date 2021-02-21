@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Events\SerieApagada;
@@ -15,12 +16,13 @@ class RemovedorDeSerie
         $nomeSerie = '';
         DB::transaction(function () use ($serieId, &$nomeSerie) {
             $serie = Serie::find($serieId);
+            $serieObj = (object) $serie->toArray();
             $nomeSerie = $serie->nome;
 
             $this->removerTemporadas($serie);
             $serie->delete();
 
-            $eventoExcluirSerie = new SerieApagada($serie);
+            $eventoExcluirSerie = new SerieApagada($serieObj);
             event($eventoExcluirSerie);
         });
 
