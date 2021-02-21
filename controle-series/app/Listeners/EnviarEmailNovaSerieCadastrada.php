@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
-class EnviarEmailNovaSerieCadastrada
+class EnviarEmailNovaSerieCadastrada implements ShouldQueue
 {
     /**
      * Create the event listener.
