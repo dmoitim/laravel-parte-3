@@ -8,7 +8,7 @@ use App\Services\CriadorDeSerie;
 use App\Services\RemovedorDeSerie;
 use Symfony\Component\HttpFoundation\Request;
 use \Illuminate\Support\Facades\Mail;
-use App\Models\User;
+use App\Events\NovaSerie;
 
 class SeriesController extends Controller
 {
@@ -35,23 +35,13 @@ class SeriesController extends Controller
             $request->ep_por_temporada
         );
 
-        $todosUsuarios = User::all();
+        $eventoNovaSerie = new NovaSerie(
+            $request->nome,
+            $request->qtd_temporadas,
+            $request->ep_por_temporada
+        );
 
-        foreach ($todosUsuarios as $indice => $usuario) {
-            $multiplicador = $indice + 1;
-
-            $email = new \App\Mail\NovaSerie(
-                $request->nome,
-                $request->qtd_temporadas,
-                $request->ep_por_temporada
-            );
-    
-            $email->subject = "Nova Série Adicionada";
-
-            $delay = now()->addSecond($multiplicador * 10);
-
-            Mail::to($usuario)->later($delay, $email);
-        }
+        event($eventoNovaSerie);
 
         $request->session()
             ->flash(
