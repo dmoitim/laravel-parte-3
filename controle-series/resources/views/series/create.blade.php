@@ -15,7 +15,7 @@ Adicionar Série
 </div>
 @endif
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     @csrf
     <div class="row">
         <div class="col-md-8">
@@ -29,6 +29,13 @@ Adicionar Série
         <div class="col-md-2">
             <label for="ep_por_temporada" class="">Ep por temporada</label>
             <input type="number" class="form-control" name="ep_por_temporada" id="ep_por_temporada" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <label for="capa" class="">Capa</label>
+            <input type="file" class="form-control" name="capa" id="capa" />
         </div>
     </div>
 
