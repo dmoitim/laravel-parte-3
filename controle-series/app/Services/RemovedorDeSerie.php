@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Events\SerieApagada;
+use App\Jobs\ExcluirCapaSerie;
 use App\Models\Episodio;
 use App\Models\Temporada;
 use App\Serie;
@@ -22,8 +23,10 @@ class RemovedorDeSerie
             $this->removerTemporadas($serie);
             $serie->delete();
 
-            $eventoExcluirSerie = new SerieApagada($serieObj);
-            event($eventoExcluirSerie);
+            // $eventoExcluirSerie = new SerieApagada($serieObj);
+            // event($eventoExcluirSerie);
+
+            ExcluirCapaSerie::dispatch($serieObj);
         });
 
         return $nomeSerie;

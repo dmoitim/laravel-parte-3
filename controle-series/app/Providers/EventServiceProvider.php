@@ -27,9 +27,10 @@ class EventServiceProvider extends ServiceProvider
             EnviarEmailNovaSerieCadastrada::class,
             LogNovaSerieCadastrada::class
         ],
+        /* Alterado para ser usado por Job
         SerieApagada::class => [
             ExcluirCapaSerie::class
-        ]
+        ]*/
     ];
 
     /**
